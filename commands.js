@@ -19,7 +19,7 @@ module.exports = function (msg) {
             const text =  ((e instanceof TypeError)?
                 "no such command":
                 e);
-            msg.channel.send(`Error: ${text}`)
+            msg.channel.send(`CommandError: ${text}`)
         }
     }
 }
