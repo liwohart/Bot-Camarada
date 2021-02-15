@@ -48,22 +48,22 @@ function getFile(filePath,fileId,auth){
 module.exports = {
 	description = 'Updates files in a certain folder',
 	run = function (msg,args) {
-	const folder = ((args.length)? args[0] : "images");
-	go = (auth) => {
-		const drive = google.drive({version: 'v3', auth});
-		drive.files.list({
-			q: `parents='${foldersId[folder]}' and trashed = false`,
-			fields: 'nextPageToken, files(id, name)',
-		}, (err, res) => {
-			if (err) return console.log('The API returned an error:', err);
-			const files = res.data.files;
-			files.map((file) => {
-				getFile(path.join(folder,file.name),file.id,auth);
+		const folder = ((args.length)? args[0] : "images");
+		go = (auth) => {
+			const drive = google.drive({version: 'v3', auth});
+			drive.files.list({
+				q: `parents='${foldersId[folder]}' and trashed = false`,
+				fields: 'nextPageToken, files(id, name)',
+			}, (err, res) => {
+				if (err) return console.log('The API returned an error:', err);
+				const files = res.data.files;
+				files.map((file) => {
+					getFile(path.join(folder,file.name),file.id,auth);
+				});
+				msg.channel.send(`полное обновление, загружено ${files.length} файлов`);
 			});
-            msg.channel.send(`полное обновление, загружено ${files.length} файлов`);
-		});
+		}
+		msg.channel.send("начало обновления");
+		return authorize(credentials,go);
 	}
-    msg.channel.send("начало обновления");
-	return authorize(credentials,go);
-}
 }
