@@ -47,21 +47,27 @@ function getFile(filePath,fileId,auth){
 
 module.exports.help = 'Updates files in a certain folder',
 module.exports.run = function (msg,args) {
-	const folder = ((args.length)? args[0] : "images");
-	go = (auth) => {
-		const drive = google.drive({version: 'v3', auth});
-		drive.files.list({
-			q: `parents='${foldersId[folder]}' and trashed = false`,
-			fields: 'nextPageToken, files(id, name)',
-		}, (err, res) => {
-			if (err) return console.log('The API returned an error:', err);
-			const files = res.data.files;
-			files.map((file) => {
-				getFile(path.join(folder,file.name),file.id,auth);
+	const folder = args[0];
+	if (foldersId[folder]) {
+		if (!fs.existsSync(folder)){
+			fs.mkdirSync(folder);
+		}
+		msg.channel.send("начало обновления");
+		return authorize(credentials, (auth) => {
+			const drive = google.drive({version: 'v3', auth});
+			drive.files.list({
+				q: `parents='${foldersId[folder]}' and trashed = false`,
+				fields: 'nextPageToken, files(id, name)',
+			}, (err, res) => {
+				if (err) return console.log('The API returned an error:', err);
+				const files = res.data.files;
+				files.map((file) => {
+					getFile(path.join(folder,file.name),file.id,auth);
+				});
+				msg.channel.send(`полное обновление, загружено ${files.length} файлов`);
 			});
-			msg.channel.send(`полное обновление, загружено ${files.length} файлов`);
 		});
+	} else {
+		msg.channel.send("Error: no such folder.");
 	}
-	msg.channel.send("начало обновления");
-	return authorize(credentials,go);
 }
