@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 
 module.exports = function (msg, args) {
-    const commandListText = fs.readdirSync('.')
+    const commandListText = fs.readdirSync('./commands')
         .map(file => `!${file.slice(0,-3)}`)
         .join("\n");
     const helpEmbed = new Discord.MessageEmbed()
