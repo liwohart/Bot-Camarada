@@ -1,11 +1,13 @@
 require('dotenv').config();
 
 const fs = require('fs');
-const authorize = require('./../authorize.js');
-const {google} = require('googleapis');
 const path = require('path');
+const {google} = require('googleapis');
+
+const authorize = require('./../authorize.js');
+
 const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
-const foldersId = JSON.parse(process.env.GOOGLE_DRIVE_FOLDERS_ID);
+const foldersId = JSON.parse(fs.readFileSync('folders-id.json'));
 
 /**
 * @param {string} filePath Path where file will be stored locally.
