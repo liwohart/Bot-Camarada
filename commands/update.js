@@ -13,7 +13,7 @@ const foldersId = JSON.parse(process.env.GOOGLE_DRIVE_FOLDERS_ID);
 * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
 */
 function getFile(filePath,fileId,auth){
-	go = (auth) => {
+	const go = (auth) => {
 		const drive = google.drive({version: 'v3', auth});
 		drive.files.get({ fileId: fileId, alt: 'media'}, {responseType: 'stream'})
 		.then(res => {
