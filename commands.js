@@ -12,7 +12,7 @@ module.exports = function (msg) {
         command = command.substring(1);
         console.log(Date(),command, msg.author.username);
         try {
-            commands[command](msg,tokens);
+            commands[command].run(msg,tokens);
         } catch (e) {
             const text =  ((e instanceof TypeError)?
                 "no such command":

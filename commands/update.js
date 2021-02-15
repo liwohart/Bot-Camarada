@@ -45,7 +45,9 @@ function getFile(filePath,fileId,auth){
 	return (auth? go(auth) : authorize(credentials,go));
 }
 
-module.exports = function (msg,args) {
+module.exports = {
+	description = 'Updates files in a certain folder',
+	run = function (msg,args) {
 	const folder = ((args.length)? args[0] : "images");
 	go = (auth) => {
 		const drive = google.drive({version: 'v3', auth});
@@ -63,4 +65,5 @@ module.exports = function (msg,args) {
 	}
     msg.channel.send("начало обновления");
 	return authorize(credentials,go);
+}
 }
