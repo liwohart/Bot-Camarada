@@ -49,11 +49,10 @@ module.exports.help = 'Updates files in a certain folder',
 module.exports.run = function (msg,args) {
 	const folder = args[0];
 	if (foldersId[folder]) {
-		if (!fs.existsSync(folder)){
-			fs.mkdirSync(folder);
-		}
+		if (!fs.existsSync(folder)) fs.mkdirSync(folder);
 		msg.channel.send("начало обновления");
 		return authorize(credentials, (auth) => {
+			const localFiles = fs.readdirSync(`./${folder}`);
 			const drive = google.drive({version: 'v3', auth});
 			drive.files.list({
 				q: `parents='${foldersId[folder]}' and trashed = false`,
@@ -61,10 +60,14 @@ module.exports.run = function (msg,args) {
 			}, (err, res) => {
 				if (err) return console.log('The API returned an error:', err);
 				const files = res.data.files;
-				files.map((file) => {
-					getFile(path.join(folder,file.name),file.id,auth);
-				});
-				msg.channel.send(`полное обновление, загружено ${files.length} файлов`);
+				const filesToDownload = files
+					.filter(file =>
+						localFiles.every(local => !(local === file.name)))
+				filesToDownload
+					.map((file) => {
+						getFile(path.join(folder,file.name),file.id,auth);
+					});
+				msg.channel.send(`полное обновление, загружено ${filesToDownload.length} файлов`);
 			});
 		});
 	} else {
