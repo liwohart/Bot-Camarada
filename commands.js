@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const fs = require('fs');
 
 const commands = fs.readdirSync('commands').reduce((obj,file) => {
