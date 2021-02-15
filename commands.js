@@ -14,9 +14,7 @@ module.exports = function (msg) {
         try {
             commands[command].run(msg,tokens);
         } catch (e) {
-            const text =  ((e instanceof TypeError)?
-                "no such command":
-                e);
+            const text =  ((e instanceof TypeError)? "no such command" : e);
             msg.channel.send(`CommandError: ${text}`)
         }
     }
