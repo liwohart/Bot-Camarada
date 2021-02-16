@@ -20,7 +20,7 @@ function getFile(filePath,fileId,auth){
 		drive.files.get({ fileId: fileId, alt: 'media'}, {responseType: 'stream'})
 		.then(res => {
 			return new Promise((resolve, reject) => {
-				console.log(`\nwriting to ${filePath}`);
+				console.log(`writing to ${filePath}`);
 				const dest = fs.createWriteStream(filePath);
 				res.data
 				.on('end', () => {
