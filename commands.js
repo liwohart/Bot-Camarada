@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const fs = require('fs');
 
 const commands = fs.readdirSync('commands').reduce((obj,file) => {
@@ -8,7 +10,7 @@ const commands = fs.readdirSync('commands').reduce((obj,file) => {
 module.exports = function (msg) {
     let tokens = msg.content.split(" ");
     let command = tokens.shift();
-    if (command.charAt(0) === "!"){
+    if (command.charAt(0) === process.env.BOT_PREFIX){
         command = command.substring(1);
         console.log(Date(),command, msg.author.username);
         try {
