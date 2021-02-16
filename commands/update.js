@@ -22,7 +22,6 @@ function getFile(filePath,fileId,auth){
 			return new Promise((resolve, reject) => {
 				console.log(`\nwriting to ${filePath}`);
 				const dest = fs.createWriteStream(filePath);
-				let progress = 0;
 				res.data
 				.on('end', () => {
 					console.log(`\nDone downloading ${filePath}.`);
@@ -31,14 +30,6 @@ function getFile(filePath,fileId,auth){
 				.on('error', err => {
 					console.error(`Error downloading ${filePath}.`);
 					reject(err);
-				})
-				.on('data', d => {
-					progress += d.length;
-					if (process.stdout.isTTY) {
-						process.stdout.clearLine();
-						process.stdout.cursorTo(0);
-						process.stdout.write(`Downloaded ${progress} bytes from ${filePath}`);
-					}
 				})
 				.pipe(dest);
 			});
