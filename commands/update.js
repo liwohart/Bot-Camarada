@@ -24,7 +24,7 @@ function getFile(filePath,fileId,auth){
 				const dest = fs.createWriteStream(filePath);
 				res.data
 				.on('end', () => {
-					console.log(`\nDone downloading ${filePath}.`);
+					console.log(`Done downloading ${filePath}.`);
 					resolve(filePath);
 				})
 				.on('error', err => {
