@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const fs = require('fs');
 const path = require('path');
-const {google} = require('googleapis');
 
 const foldersId = JSON.parse(fs.readFileSync('folders-id.json'));
 
@@ -11,7 +10,7 @@ module.exports.run = function (msg, args) {
     const folder = args[0];
     if (foldersId[folder]) {
         const file = args[1];
-        const filePath = `./${folder}/${file}`;
+        const filePath = path.join(folder,file);
         if (fs.existsSync(filePath)) {
             msg.channel.send("вот файл, который вы просили",{
                 files: [filePath]
