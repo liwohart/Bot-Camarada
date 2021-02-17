@@ -5,6 +5,7 @@ const path = require('path');
 const {google} = require('googleapis');
 
 const authorize = require('./../authorize.js');
+const Command = require('./../command-class.js');
 
 const trash = process.env.TRASH_PATH;
 const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
@@ -39,8 +40,7 @@ function getFile(filePath,fileId,auth){
 	return (auth? go(auth) : authorize(credentials,go));
 }
 
-module.exports.help = 'Updates files in a certain folder',
-module.exports.run = function (msg,args) {
+module.exports = new Command('Updates files in a certain folder', (msg,args) => {
 	const folder = args[0];
 	if (foldersId[folder]) {
 		if (!fs.existsSync(trash)) fs.mkdirSync(trash);
@@ -79,4 +79,4 @@ module.exports.run = function (msg,args) {
 	} else {
 		msg.channel.send("Error: no such folder.");
 	}
-}
+});

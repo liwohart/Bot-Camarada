@@ -1,8 +1,9 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 
-module.exports.help = 'Lists all commands with a little description',
-module.exports.run = function (msg, args) {
+const Command = require('./../command-class.js');
+
+module.exports = new Command('Lists all commands with a little description', (msg, _args) => {
     const commandListText = fs.readdirSync('./commands')
         .map(file =>
             `${"``"}!${file.slice(0,-3)}${"``"} ${require(`./${file}`).help}`)
@@ -12,4 +13,4 @@ module.exports.run = function (msg, args) {
         .addField('Список команд',commandListText)
         .setTimestamp();
     msg.channel.send(helpEmbed);
-}
+});
