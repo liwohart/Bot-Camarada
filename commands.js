@@ -20,6 +20,7 @@ module.exports = function (msg) {
             commands[command].run(msg,tokens)
         } catch (e) {
             msg.channel.send(`CommandError: ${e}`)
+            console.error(e);
         }
     }
 }

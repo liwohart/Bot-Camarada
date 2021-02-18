@@ -6,7 +6,7 @@ class Command {
     }
 
     getVarText() {
-        return `${((text.length)? ' ' : '')}${this.format}`
+        return `${((this.format.length)? ' ' : '')}${this.format}`
     }
 
     static pv(v) {
