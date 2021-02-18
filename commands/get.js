@@ -7,7 +7,11 @@ const Command = require('./../command-class.js');
 
 const foldersId = JSON.parse(fs.readFileSync('folders-id.json'));
 
-module.exports = new Command("Gets a file given its folder.", (msg, args) => {
+module.exports = new Command("Gets a file given its folder.", [
+    'folder',
+    'file'
+], [], (nOpts, _opts) =>
+    `${nOpts['folder']} ${nOpts['file']}`, (msg, args) => {
     const folder = args[0];
     if (foldersId[folder]) {
         const file = args[1];

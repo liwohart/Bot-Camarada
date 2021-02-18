@@ -10,7 +10,9 @@ const Command = require('./../command-class.js');
 const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
 const foldersId = JSON.parse(fs.readFileSync('folders-id.json'));
 
-module.exports = new Command('Lists all files in a certain folder', (msg,args) => {
+module.exports = new Command('Lists all files in a certain folder', ['folder'], [],
+(nOpts, _opts) => nOpts['folder'],
+(msg,args) => {
 	const folder = args[0];
 	if (foldersId[folder]) {
 		return authorize(credentials, (auth) => {
