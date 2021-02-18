@@ -12,12 +12,10 @@ module.exports = function (msg) {
     let command = tokens.shift();
     if (command.charAt(0) === process.env.BOT_PREFIX){
         command = command.substring(1);
-        console.log(process.env.TMZ);
         console.log(
-            new Date().toLocaleString("pt-BR", {
+            `${new Date().toLocaleString("pt-BR", {
                 timeZone: process.env.TMZ
-            }),
-            msg.author.username, msg.content.slice(1));
+            })} ${msg.author.username}: ${msg.content.substring(1)}`);
         try {
             commands[command].run(msg,tokens);
         } catch (e) {
