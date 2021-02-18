@@ -12,6 +12,7 @@ module.exports = function (msg) {
     let command = tokens.shift();
     if (command.charAt(0) === process.env.BOT_PREFIX){
         command = command.substring(1);
+        console.log(process.env.TMZ);
         console.log(
             new Date().toLocaleString("pt-BR", {
                 timeZone: process.env.TMZ
