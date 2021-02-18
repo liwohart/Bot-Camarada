@@ -1,5 +1,5 @@
 class Command {
-    constructor(help, notOptionals, optionals, format, run){
+    constructor(help, format, run){
         this.help = help
         this.format = format
         this.run = run
