@@ -12,7 +12,7 @@ module.exports = function (msg) {
     let command = tokens.shift();
     if (command.charAt(0) === process.env.BOT_PREFIX){
         command = command.substring(1);
-        console.log(Date(),command, msg.author.username);
+        console.log(Date(), msg.author.username, msg.content.slice(1));
         try {
             commands[command].run(msg,tokens);
         } catch (e) {
