@@ -1,15 +1,15 @@
-require('dotenv').config();
+require('dotenv').config()
 
 const commandHandler = require('./commands.js')
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const Discord = require('discord.js')
+const client = new Discord.Client()
 
-console.log("beep beep");
+console.log("beep beep")
 
 client.on('ready', () => {
-	console.log("Agora vai");
-});
+	console.log("Agora vai")
+})
 
-client.on('message', commandHandler);
+client.on('message', commandHandler)
 
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN)
